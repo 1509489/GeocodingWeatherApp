@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawerLayout"
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -17,11 +18,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?colorPrimary"
-                android:theme="@style/Widget.AppCompat.Toolbar"
-        />
+                android:theme="@style/ToolbarTheme"
+                android:gravity="top"/>
+
         <fragment android:layout_width="match_parent"
-                  android:layout_height="0dp"
-                  android:layout_weight="1"
+                  android:layout_height="match_parent"
                   android:id="@+id/nav_host_fragment"
                   android:name="androidx.navigation.fragment.NavHostFragment"
                   app:navGraph="@navigation/nav_graph"
