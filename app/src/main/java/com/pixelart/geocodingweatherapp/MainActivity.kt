@@ -29,15 +29,6 @@ class MainActivity : AppCompatActivity() {
         NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_toolbar, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return super.onOptionsItemSelected(item)
-    }
-
     override fun onSupportNavigateUp(): Boolean {
         return NavigationUI.navigateUp(naveController, drawerLayout)
     }
