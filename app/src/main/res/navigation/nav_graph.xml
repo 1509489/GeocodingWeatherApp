@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/nav_graph"
+            app:startDestination="@id/dest_home">
+
+    <fragment
+            android:id="@+id/dest_home"
+            android:name="com.pixelart.geocodingweatherapp.homescreen.HomeFragment"
+            android:label="fragment_home"
+            tools:layout="@layout/fragment_home">
+
+        <action
+                android:id="@+id/action_home_to_addLocation"
+                app:destination="@id/dest_addLocation"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+
+        <action android:id="@+id/action_home_to_forecast"
+                app:destination="@id/dest_forecast"/>
+    </fragment>
+
+    <fragment
+            android:id="@+id/dest_addLocation"
+            android:name="com.pixelart.geocodingweatherapp.addlocationscreen.AddLocationFragment"
+            android:label="fragment_add_location"
+            tools:layout="@layout/fragment_add_location"/>
+
+    <fragment
+            android:id="@+id/dest_forecast"
+            android:name="com.pixelart.geocodingweatherapp.forecastscreen.ForecastFragment"
+            android:label="fragment_forecast"
+            tools:layout="@layout/fragment_forecast"/>
+
+    <fragment
+            android:id="@+id/dest_settings"
+            android:name="com.pixelart.geocodingweatherapp.settingsscreen.SettingsFragment"
+            android:label="fragment_settings"
+            tools:layout="@layout/fragment_settings"/>
+</navigation>
