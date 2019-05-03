@@ -4,23 +4,24 @@
             xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/nav_graph"
             app:startDestination="@id/dest_home">
-
+    
     <fragment
-            android:id="@+id/dest_home"
-            android:name="com.pixelart.geocodingweatherapp.homescreen.HomeFragment"
-            android:label="Home"
-            tools:layout="@layout/fragment_home">
-
+        android:id="@+id/dest_home"
+        android:name="com.pixelart.geocodingweatherapp.homescreen.HomeFragment"
+        android:label="Locations"
+        tools:layout="@layout/fragment_home">
+        
         <action
-                android:id="@+id/action_home_to_addLocation"
-                app:destination="@id/dest_addLocation"
-                app:enterAnim="@anim/nav_default_enter_anim"
-                app:exitAnim="@anim/nav_default_exit_anim"
-                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-                app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
-
-        <action android:id="@+id/action_home_to_forecast"
-                app:destination="@id/dest_forecast"/>
+            android:id="@+id/action_home_to_addLocation"
+            app:destination="@id/dest_addLocation"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        
+        <action
+            android:id="@+id/action_home_to_forecast"
+            app:destination="@id/dest_forecast" />
     </fragment>
 
     <fragment
@@ -28,12 +29,12 @@
             android:name="com.pixelart.geocodingweatherapp.addlocationscreen.AddLocationFragment"
             android:label="Add Location"
             tools:layout="@layout/fragment_add_location"/>
-
+    
     <fragment
-            android:id="@+id/dest_forecast"
-            android:name="com.pixelart.geocodingweatherapp.forecastscreen.ForecastFragment"
-            android:label="Forecast"
-            tools:layout="@layout/fragment_forecast"/>
+        android:id="@+id/dest_forecast"
+        android:name="com.pixelart.geocodingweatherapp.forecastscreen.ForecastFragment"
+        android:label="Forecast"
+        tools:layout="@layout/fragment_forecast" />
 
     <fragment
             android:id="@+id/dest_settings"
