@@ -1,4 +1,4 @@
-package com.pixelart.geocodingweatherapp.homescreen
+package com.pixelart.geocodingweatherapp.ui.homescreen
 
 
 import android.os.Bundle

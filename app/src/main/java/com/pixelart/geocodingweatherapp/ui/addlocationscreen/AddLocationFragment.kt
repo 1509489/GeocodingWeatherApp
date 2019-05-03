@@ -1,4 +1,4 @@
-package com.pixelart.geocodingweatherapp.addlocationscreen
+package com.pixelart.geocodingweatherapp.ui.addlocationscreen
 
 
 import android.os.Bundle
