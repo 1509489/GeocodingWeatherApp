@@ -15,6 +15,7 @@ class RepositoryImpl(private val database: LocationDatabase, private val network
 
     private val location = MutableLiveData<GeoResponse>()
     private val compositeDisposable = CompositeDisposable()
+    private val status = MutableLiveData<Status>()
     
     override fun addLocation(location: LocationEntity) {
         Thread{
@@ -31,13 +32,26 @@ class RepositoryImpl(private val database: LocationDatabase, private val network
             networkService.getLocation(address, API_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({response -> location.value = response}, {error -> error.printStackTrace()})
-        )
+                .subscribe(
+                    {response -> location.value = response
+                        status.value = Status.SUCCESS
+                    },
+                    { error -> error.printStackTrace()
+                        status.value = Status.FAILURE
+                    }
+                ))
 
         return location
     }
 
     fun onClear(){
         compositeDisposable.clear()
+    }
+
+    fun getStatus():LiveData<Status> = status
+
+    enum class Status{
+        SUCCESS,
+        FAILURE
     }
 }
