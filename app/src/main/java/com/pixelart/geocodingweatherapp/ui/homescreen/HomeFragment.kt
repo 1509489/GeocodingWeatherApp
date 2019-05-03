@@ -2,7 +2,6 @@ package com.pixelart.geocodingweatherapp.ui.homescreen
 
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -14,11 +13,9 @@ import com.pixelart.geocodingweatherapp.AppController
 
 import com.pixelart.geocodingweatherapp.R
 import com.pixelart.geocodingweatherapp.adapter.LocationsAdapter
-import com.pixelart.geocodingweatherapp.data.entities.LocationEntity
 import com.pixelart.geocodingweatherapp.di.fragment.FragmentModule
 import kotlinx.android.synthetic.main.fragment_home.*
 import javax.inject.Inject
-import kotlin.math.log
 
 class HomeFragment : Fragment(), LocationsAdapter.OnItemClickedListener {
     
@@ -54,24 +51,10 @@ class HomeFragment : Fragment(), LocationsAdapter.OnItemClickedListener {
             addItemDecoration(DividerItemDecoration(this@HomeFragment.context, LinearLayoutManager.VERTICAL))
             adapter = this@HomeFragment.adapter
         }
-
-        val locations = ArrayList<LocationEntity>()
-        for (i in 0 until 10){
-            locations.add(LocationEntity(
-                locationName = "Test Location $i",
-                longitude = 25.88,
-                latitude = 24.66,
-                countryLongName = "United Kingdom",
-                countryShortName = "UK"
-            ))
-        }
         
         btnAdd.setOnClickListener {
             val action = HomeFragmentDirections.actionHomeToAddLocation()
             Navigation.findNavController(it).navigate(action)
-            
-            for (i in 0 until locations.size)
-                viewModel.addLocation(locations[i])
         }
     }
 
