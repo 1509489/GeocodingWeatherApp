@@ -1,4 +1,4 @@
-package com.pixelart.geocodingweatherapp.settingsscreen
+package com.pixelart.geocodingweatherapp.ui.settingsscreen
 
 
 import android.os.Bundle

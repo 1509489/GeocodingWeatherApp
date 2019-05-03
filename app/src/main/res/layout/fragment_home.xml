@@ -4,7 +4,7 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context=".homescreen.HomeFragment">
+             tools:context=".ui.homescreen.HomeFragment">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
             app:srcCompat="@drawable/ic_add"
@@ -17,4 +17,7 @@
             app:elevation="10dp"
             app:useCompatPadding="false"
             android:layout_margin="10dp"/>
+    <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:id="@+id/rvLocations"/>
 </FrameLayout>
