@@ -2,16 +2,14 @@ package com.pixelart.geocodingweatherapp.ui.addlocationscreen
 
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.pixelart.geocodingweatherapp.AppController
 
 import com.pixelart.geocodingweatherapp.R
 import com.pixelart.geocodingweatherapp.data.entities.LocationEntity
-import com.pixelart.geocodingweatherapp.data.repository.RepositoryImpl
+import com.pixelart.geocodingweatherapp.data.repository.LocationRepositoryImpl
 import com.pixelart.geocodingweatherapp.di.fragment.FragmentModule
 import com.pixelart.geocodingweatherapp.ui.homescreen.LocationViewModel
 import kotlinx.android.synthetic.main.fragment_add_location.view.*
@@ -118,12 +116,12 @@ class AddLocationFragment : Fragment() {
 
             viewModel.getSatus().observe(this, Observer {
                     when(it!!){
-                        RepositoryImpl.Status.SUCCESS ->{
+                        LocationRepositoryImpl.Status.SUCCESS ->{
                             viewModel.clear()
                             locations.clear()
                             activity?.supportFragmentManager?.popBackStack()
                         }
-                        RepositoryImpl.Status.FAILURE ->{
+                        LocationRepositoryImpl.Status.FAILURE ->{
 
                         }
                     }
