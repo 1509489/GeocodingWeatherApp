@@ -2,6 +2,7 @@ package com.pixelart.geocodingweatherapp.di.fragment
 
 import com.pixelart.geocodingweatherapp.factories.LocationViewModelFactory
 import com.pixelart.geocodingweatherapp.ui.addlocationscreen.AddLocationFragment
+import com.pixelart.geocodingweatherapp.ui.forecastscreen.ForecastFragment
 import com.pixelart.geocodingweatherapp.ui.homescreen.HomeFragment
 import dagger.Subcomponent
 
@@ -12,4 +13,5 @@ interface FragmentComponent {
     fun getLocationViewModelFactory(): LocationViewModelFactory
     fun injectHomeScreen(homeFragment: HomeFragment)
     fun injectAddLocationScreen(addLocationFragment: AddLocationFragment)
+    fun injectForecastScreen(forecastFragment: ForecastFragment)
 }
