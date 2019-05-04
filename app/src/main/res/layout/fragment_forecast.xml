@@ -7,13 +7,13 @@
     tools:context=".ui.forecastscreen.ForecastFragment">
     
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/main.appbar"
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
         
         <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:id="@+id/main.collapsing"
+            android:id="@+id/collapsing"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:fitsSystemWindows="true"
@@ -21,10 +21,10 @@
             app:expandedTitleGravity="bottom|center"
             app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_scrollFlags="exitUntilCollapsed|snap"
-            app:toolbarId="@id/main.toolbar">
+            app:toolbarId="@id/toolbar">
             
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/main.toolbar"
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
