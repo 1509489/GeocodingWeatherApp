@@ -28,4 +28,8 @@ class WeatherRepositoryImpl(private val networkService: NetworkService):WeatherR
 
         return weatherResponse
     }
+
+    override fun onClear() {
+        compositeDisposable.clear()
+    }
 }

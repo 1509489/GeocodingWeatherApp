@@ -12,12 +12,7 @@ class LocationViewModel(private val repository: LocationRepositoryImpl): ViewMod
     fun addLocation(location: LocationEntity)= repository.addLocation(location)
 
     fun getLocationNetwork(location: String):LiveData<GeoResponse> = repository.getLocationNetwork(location)
-    fun getSatus() = repository.getStatus()
-
-     fun clear() {
-        super.onCleared()
-         onCleared()
-    }
+    fun getStatus() = repository.getStatus()
 
     override fun onCleared() {
         super.onCleared()
