@@ -10,7 +10,7 @@ class AppController: Application() {
     val applicationComponent: ApplicationComponent by lazy {
         DaggerApplicationComponent.builder()
             .applicationModule(ApplicationModule(this))
-            //.networkModule(NetworkModule())
+            .networkModule(NetworkModule())
             .build()
     }
 }
