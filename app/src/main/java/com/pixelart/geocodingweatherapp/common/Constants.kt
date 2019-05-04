@@ -11,3 +11,4 @@ const val API_KEY = "AIzaSyAbVL9HHSKAincWQpBfFQxKK6FN0SFRILo"
 //Open weather
 const val APP_ID = "ebd631a0fa77db0f0181aedad58f17d7"
 const val WEATHER_BASE_URL = "https://api.openweathermap.org/"
+const val WEATHER_ICONURL = "http://openweathermap.org/img/w/"
