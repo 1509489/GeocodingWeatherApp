@@ -46,7 +46,7 @@ class NetworkModule{
             .build()
     }
 
-    /*@Provides
+    @Provides
     @ApplicationScope
     @Named("weather")
     fun providesRetrofitClientWeather(okHttpClient: OkHttpClient): Retrofit {
@@ -56,15 +56,15 @@ class NetworkModule{
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-    }*/
+    }
 
     @Provides
     @ApplicationScope
     @Named("geocoding")
     fun providesNetworkServiceGeocoding(@Named("geocoding")retrofit: Retrofit) = retrofit.create(NetworkService::class.java)
 
-    /*@Provides
+    @Provides
     @ApplicationScope
     @Named("weather")
-    fun providesNetworkServiceWeather(@Named("weather")retrofit: Retrofit) = retrofit.create(NetworkService::class.java)*/
+    fun providesNetworkServiceWeather(@Named("weather")retrofit: Retrofit) = retrofit.create(NetworkService::class.java)
 }
