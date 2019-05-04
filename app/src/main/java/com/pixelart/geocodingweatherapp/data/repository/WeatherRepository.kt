@@ -5,5 +5,5 @@ import com.pixelart.geocodingweatherapp.data.dto.weather.WeatherResponse
 
 interface WeatherRepository {
 
-    fun getWeatherForecast(latitude: Double, longitude: Double):LiveData<WeatherResponse>
+    fun getWeatherForecast(latitude: Double, longitude: Double, units: String):LiveData<WeatherResponse>
 }

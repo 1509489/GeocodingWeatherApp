@@ -5,5 +5,6 @@ import com.pixelart.geocodingweatherapp.data.repository.WeatherRepositoryImpl
 
 class WeatherViewModel(private val weatherRepository: WeatherRepositoryImpl): ViewModel() {
 
-    fun getForecast(latitude: Double, longitude: Double) = weatherRepository.getWeatherForecast(latitude, longitude)
+    fun getForecast(latitude: Double, longitude: Double, units: String) =
+        weatherRepository.getWeatherForecast(latitude, longitude, units)
 }

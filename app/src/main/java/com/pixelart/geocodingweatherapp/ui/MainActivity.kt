@@ -7,6 +7,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.pixelart.geocodingweatherapp.R
+import com.pixelart.geocodingweatherapp.common.PrefsManager
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -19,6 +20,11 @@ class MainActivity : AppCompatActivity() {
 
         naveController = Navigation.findNavController(this, R.id.nav_host_fragment)
         setUp(naveController)
+
+        PrefsManager.INSTANCE.setContext(this.application)
+
+        if (PrefsManager.INSTANCE.getTemperatureUnits() == null)
+            PrefsManager.INSTANCE.setTemperatureUnits("metric")
     }
 
     private fun setUp(navController: NavController){

@@ -3,7 +3,6 @@ package com.pixelart.geocodingweatherapp.ui.homescreen
 
 import android.os.Bundle
 import android.view.*
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
@@ -72,7 +71,5 @@ class HomeFragment : Fragment(), LocationsAdapter.OnItemClickedListener {
 
         val action = HomeFragmentDirections.actionHomeToForecast()
         itemView?.let { Navigation.findNavController(it).navigate(action) }
-
-        Toast.makeText(activity?.applicationContext, "Position: $position Clicked", Toast.LENGTH_SHORT).show()
     }
 }

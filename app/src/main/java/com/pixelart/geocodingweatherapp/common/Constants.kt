@@ -12,3 +12,7 @@ const val API_KEY = "AIzaSyAbVL9HHSKAincWQpBfFQxKK6FN0SFRILo"
 const val APP_ID = "ebd631a0fa77db0f0181aedad58f17d7"
 const val WEATHER_BASE_URL = "https://api.openweathermap.org/"
 const val WEATHER_ICONURL = "http://openweathermap.org/img/w/"
+
+//Shard Preferences
+const val PREFS_NAME = "com.pixelart.geocodingweatherapp.common.sharedpreferences"
+const val KEY_UNITS = "units"

@@ -18,6 +18,7 @@ interface NetworkService {
     fun getWeatherForecast(
         @Query("lat") latitude: Double,
         @Query("lon") longitude: Double,
+        @Query("units") units: String,
         @Query("appid") appId: String
     ):Single<WeatherResponse>
 }

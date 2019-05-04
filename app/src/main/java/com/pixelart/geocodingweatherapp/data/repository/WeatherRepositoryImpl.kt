@@ -14,14 +14,14 @@ class WeatherRepositoryImpl(private val networkService: NetworkService):WeatherR
     private val weatherResponse = MutableLiveData<WeatherResponse>()
     private val compositeDisposable = CompositeDisposable()
 
-    override fun getWeatherForecast(latitude: Double, longitude: Double): LiveData<WeatherResponse> {
+    override fun getWeatherForecast(latitude: Double, longitude: Double, units: String): LiveData<WeatherResponse> {
 
         compositeDisposable.add(
-            networkService.getWeatherForecast(latitude, longitude, APP_ID)
+            networkService.getWeatherForecast(latitude, longitude, units, APP_ID)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                    {response -> weatherResponse.value = response},
+                    {response -> weatherResponse.postValue(response)},
                     {error -> error.printStackTrace()}
                 )
         )
