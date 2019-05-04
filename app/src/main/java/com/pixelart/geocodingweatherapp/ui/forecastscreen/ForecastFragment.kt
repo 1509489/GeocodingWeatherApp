@@ -14,6 +14,7 @@ import androidx.lifecycle.Observer
 import com.pixelart.geocodingweatherapp.AppController
 import com.pixelart.geocodingweatherapp.common.GlideApp
 import com.pixelart.geocodingweatherapp.common.RxBus
+import com.pixelart.geocodingweatherapp.common.Utils
 import com.pixelart.geocodingweatherapp.common.WEATHER_ICONURL
 import com.pixelart.geocodingweatherapp.data.entities.LocationEntity
 import com.pixelart.geocodingweatherapp.data.model.Forecast
@@ -77,10 +78,10 @@ class ForecastFragment : Fragment() {
             Log.d("Forecast", forecast.size.toString())
 
             rootView.apply {
-                tvDayOne.text = forecast[0].timestamp.toString()
-                tvDayTwo.text = forecast[1].timestamp.toString()
-                tvDayThree.text = forecast[2].timestamp.toString()
-                tvDayFour.text = forecast[3].timestamp.toString()
+                tvDayOne.text = Utils.INSTANCE.timestampToDayLong(forecast[0].timestamp.toLong())
+                tvDayTwo.text = Utils.INSTANCE.timestampToDayShort(forecast[1].timestamp.toLong())
+                tvDayThree.text = Utils.INSTANCE.timestampToDayShort(forecast[2].timestamp.toLong())
+                tvDayFour.text = Utils.INSTANCE.timestampToDayShort(forecast[3].timestamp.toLong())
 
                 tvDayOneTemperature.text = forecast[0].temperature.toString()
                 tvDayTwoTemperature.text = forecast[1].temperature.toString()
