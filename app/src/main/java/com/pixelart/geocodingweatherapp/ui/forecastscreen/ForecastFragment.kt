@@ -1,8 +1,8 @@
 package com.pixelart.geocodingweatherapp.ui.forecastscreen
 
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,10 +12,7 @@ import com.pixelart.geocodingweatherapp.R
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.pixelart.geocodingweatherapp.AppController
-import com.pixelart.geocodingweatherapp.common.GlideApp
-import com.pixelart.geocodingweatherapp.common.RxBus
-import com.pixelart.geocodingweatherapp.common.Utils
-import com.pixelart.geocodingweatherapp.common.WEATHER_ICONURL
+import com.pixelart.geocodingweatherapp.common.*
 import com.pixelart.geocodingweatherapp.data.entities.LocationEntity
 import com.pixelart.geocodingweatherapp.data.model.Forecast
 import com.pixelart.geocodingweatherapp.di.fragment.FragmentModule
@@ -32,6 +29,7 @@ class ForecastFragment : Fragment() {
     private lateinit var latLon: Pair<Double, Double>
     private var toolbarTitle = ""
     private lateinit var forecast: ArrayList<Forecast>
+    private var units = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +45,9 @@ class ForecastFragment : Fragment() {
                 toolbarTitle = it.locationName
             }
         })
+
+        if (PrefsManager.INSTANCE.getTemperatureUnits() != null)
+            units = PrefsManager.INSTANCE.getTemperatureUnits()!!
 
         forecast = ArrayList()
     }
@@ -64,18 +65,18 @@ class ForecastFragment : Fragment() {
         rootView.collapsing.title = toolbarTitle
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onResume() {
         super.onResume()
-        viewModel.getForecast(latLon.first, latLon.second).observe(this, Observer {weatherResponse ->
+
+        viewModel.getForecast(latLon.first, latLon.second, units)
+            .observe(this, Observer { weatherResponse ->
 
             for (i in 0 until weatherResponse.list.size step 8 )
             {
                 forecast.add(Forecast(weatherResponse.list[i].dt, weatherResponse.list[i].weather[0].icon,
                     weatherResponse.list[i].main.temp))
-
-                Log.d("Timestamp", weatherResponse.list[i].dt.toString())
             }
-            Log.d("Forecast", forecast.size.toString())
 
             rootView.apply {
                 tvDayOne.text = Utils.INSTANCE.timestampToDayLong(forecast[0].timestamp.toLong())
@@ -83,10 +84,18 @@ class ForecastFragment : Fragment() {
                 tvDayThree.text = Utils.INSTANCE.timestampToDayShort(forecast[2].timestamp.toLong())
                 tvDayFour.text = Utils.INSTANCE.timestampToDayShort(forecast[3].timestamp.toLong())
 
-                tvDayOneTemperature.text = forecast[0].temperature.toString()
-                tvDayTwoTemperature.text = forecast[1].temperature.toString()
-                tvDayThreeTemperature.text = forecast[2].temperature.toString()
-                tvDayFourTemperature.text = forecast[3].temperature.toString()
+                if (units.contains("metric")){
+                    tvDayOneTemperature.text = "${forecast[0].temperature}°C"
+                    tvDayTwoTemperature.text = "${forecast[1].temperature}°C"
+                    tvDayThreeTemperature.text = "${forecast[2].temperature}°C"
+                    tvDayFourTemperature.text = "${forecast[3].temperature}°C"
+                }
+                else if(units.contains("imperial")){
+                    tvDayOneTemperature.text = "${forecast[0].temperature}°F"
+                    tvDayTwoTemperature.text = "${forecast[1].temperature}°F"
+                    tvDayThreeTemperature.text = "${forecast[2].temperature}°F"
+                    tvDayFourTemperature.text = "${forecast[3].temperature}°F"
+                }
 
                 GlideApp.with(this)
                     .load("$WEATHER_ICONURL${forecast[0].icon}.png")
