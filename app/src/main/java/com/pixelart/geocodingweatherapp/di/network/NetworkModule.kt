@@ -1,6 +1,7 @@
 package com.pixelart.geocodingweatherapp.di.network
 
-import com.pixelart.geocodingweatherapp.common.BASE_URL
+import com.pixelart.geocodingweatherapp.common.GEO_BASE_URL
+import com.pixelart.geocodingweatherapp.common.WEATHER_BASE_URL
 import com.pixelart.geocodingweatherapp.data.network.NetworkService
 import com.pixelart.geocodingweatherapp.di.application.ApplicationScope
 import dagger.Module
@@ -11,9 +12,10 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Named
 
 @Module
-class NetworkModule {
+class NetworkModule{
 
     @Provides
     @ApplicationScope
@@ -34,16 +36,35 @@ class NetworkModule {
 
     @Provides
     @ApplicationScope
-    fun providesRetrofitClient(okHttpClient: OkHttpClient): Retrofit {
+    @Named("geocoding")
+    fun providesRetrofitClientGeocoding(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .client(okHttpClient)
-            .baseUrl(BASE_URL)
+            .baseUrl(GEO_BASE_URL)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
 
+    /*@Provides
+    @ApplicationScope
+    @Named("weather")
+    fun providesRetrofitClientWeather(okHttpClient: OkHttpClient): Retrofit {
+        return Retrofit.Builder()
+            .client(okHttpClient)
+            .baseUrl(WEATHER_BASE_URL)
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }*/
+
     @Provides
     @ApplicationScope
-    fun providesNetworkService(retrofit: Retrofit) = retrofit.create(NetworkService::class.java)
+    @Named("geocoding")
+    fun providesNetworkServiceGeocoding(@Named("geocoding")retrofit: Retrofit) = retrofit.create(NetworkService::class.java)
+
+    /*@Provides
+    @ApplicationScope
+    @Named("weather")
+    fun providesNetworkServiceWeather(@Named("weather")retrofit: Retrofit) = retrofit.create(NetworkService::class.java)*/
 }

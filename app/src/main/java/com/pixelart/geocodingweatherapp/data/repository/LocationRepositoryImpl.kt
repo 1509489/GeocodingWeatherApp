@@ -11,7 +11,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class RepositoryImpl(private val database: LocationDatabase, private val networkService: NetworkService): Repository {
+class LocationRepositoryImpl(private val database: LocationDatabase, private val networkService: NetworkService): LocationRepository {
 
     private val location = MutableLiveData<GeoResponse>()
     private val compositeDisposable = CompositeDisposable()
