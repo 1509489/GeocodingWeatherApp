@@ -7,4 +7,9 @@ class WeatherViewModel(private val weatherRepository: WeatherRepositoryImpl): Vi
 
     fun getForecast(latitude: Double, longitude: Double, units: String) =
         weatherRepository.getWeatherForecast(latitude, longitude, units)
+
+    override fun onCleared() {
+        super.onCleared()
+        weatherRepository.onClear()
+    }
 }

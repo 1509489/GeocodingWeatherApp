@@ -20,7 +20,6 @@
                 android:hint="@string/enter_city_name" android:id="@+id/etLocation"/>
     </com.google.android.material.textfield.TextInputLayout>
     <TextView
-            android:text="TextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/tvCountry"

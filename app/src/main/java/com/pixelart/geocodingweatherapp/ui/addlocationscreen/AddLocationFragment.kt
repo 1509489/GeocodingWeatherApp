@@ -114,10 +114,9 @@ class AddLocationFragment : Fragment() {
             }
 
 
-            viewModel.getSatus().observe(this, Observer {
+            viewModel.getStatus().observe(this, Observer {
                     when(it!!){
                         LocationRepositoryImpl.Status.SUCCESS ->{
-                            viewModel.clear()
                             locations.clear()
                             activity?.supportFragmentManager?.popBackStack()
                         }
