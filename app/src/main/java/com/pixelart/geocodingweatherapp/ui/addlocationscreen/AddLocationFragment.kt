@@ -4,21 +4,29 @@ package com.pixelart.geocodingweatherapp.ui.addlocationscreen
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.pixelart.geocodingweatherapp.AppController
 
 import com.pixelart.geocodingweatherapp.R
 import com.pixelart.geocodingweatherapp.data.entities.LocationEntity
+import com.pixelart.geocodingweatherapp.data.repository.RepositoryImpl
 import com.pixelart.geocodingweatherapp.di.fragment.FragmentModule
 import com.pixelart.geocodingweatherapp.ui.homescreen.LocationViewModel
 import kotlinx.android.synthetic.main.fragment_add_location.view.*
 import javax.inject.Inject
+import android.os.Handler
+import android.text.Editable
+import android.text.TextWatcher
+
 
 class AddLocationFragment : Fragment() {
 
     @Inject lateinit var viewModel: LocationViewModel
 
     private lateinit var rootView: View
+    private lateinit var locations: ArrayList<LocationEntity>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,12 +36,71 @@ class AddLocationFragment : Fragment() {
             .applicationComponent
             .newFragmentComponent(FragmentModule(this))
         fragmentComponent.injectAddLocationScreen(this)
+
+        locations = ArrayList()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_add_location, container, false)
         return rootView
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        var lastTextEdit = 0L
+        val delay = 1000L
+        val handler = Handler()
+
+        val inputFinish = Runnable{
+            if (System.currentTimeMillis() > lastTextEdit + delay - 500) {
+
+                if(rootView.etLocation.text.toString().isNotBlank()){
+                    val location = rootView.etLocation.text.toString()
+
+                    viewModel.getLocationNetwork(location).observe(this, Observer { geoResponse ->
+
+                        if (geoResponse.status.contains("OK", true)){
+                            val country  = geoResponse.results[0].addressComponents.filter { addressComponent ->
+                                addressComponent.types[0].contains("country", true)
+                            }
+
+                            locations.add(
+                                LocationEntity(
+                                    locationName = geoResponse.results[0].formattedAddress,
+                                    longitude = geoResponse.results[0].geometry.location.lng,
+                                    latitude = geoResponse.results[0].geometry.location.lat,
+                                    countryLongName = country[0].longName,
+                                    countryShortName = country[0].shortName
+                            ))
+                            rootView.tvCountry.text = country[0].longName
+                        }
+                    })
+                }else{
+                    rootView.tvCountry.text = ""
+                }
+            }
+        }
+
+        rootView.etLocation.addTextChangedListener(object : TextWatcher{
+            override fun afterTextChanged(s: Editable?) {
+                if(s?.length!! > 0){
+                    lastTextEdit = System.currentTimeMillis()
+                    handler.postDelayed(inputFinish, delay)
+                }
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                handler.removeCallbacks(inputFinish)
+                locations.clear()
+            }
+        })
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -44,18 +111,24 @@ class AddLocationFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return if (item.itemId == R.id.mItem_done){
 
-            val location = rootView.etLocation.text.toString()
+            if (locations.size > 0){
+                viewModel.addLocation(locations[0])
+            }
 
-            viewModel.addLocation(LocationEntity(
-                locationName = location,
-                longitude = 25.88,
-                latitude = 24.66,
-                countryLongName = "United Kingdom",
-                countryShortName = "UK"
-            ))
 
-            Log.d("TEST", "City: $location")
-            activity?.supportFragmentManager?.popBackStack()
+            viewModel.getSatus().observe(this, Observer {
+                    when(it!!){
+                        RepositoryImpl.Status.SUCCESS ->{
+                            viewModel.clear()
+                            locations.clear()
+                            activity?.supportFragmentManager?.popBackStack()
+                        }
+                        RepositoryImpl.Status.FAILURE ->{
+
+                        }
+                    }
+                })
+
             true
         }else{
             super.onOptionsItemSelected(item)

@@ -5,11 +5,13 @@ import android.content.Context
 import androidx.room.Room
 import com.pixelart.geocodingweatherapp.common.DATABASE_NAME
 import com.pixelart.geocodingweatherapp.data.database.LocationDatabase
+import com.pixelart.geocodingweatherapp.data.network.NetworkService
 import com.pixelart.geocodingweatherapp.data.repository.RepositoryImpl
+import com.pixelart.geocodingweatherapp.di.network.NetworkModule
 import dagger.Module
 import dagger.Provides
 
-@Module
+@Module(includes = [NetworkModule::class])
 class ApplicationModule(private val application: Application) {
     
     @Provides
@@ -23,5 +25,6 @@ class ApplicationModule(private val application: Application) {
     
     @Provides
     @ApplicationScope
-    fun providesRepository(database: LocationDatabase): RepositoryImpl = RepositoryImpl(database)
+    fun providesRepository(database: LocationDatabase, networkService: NetworkService): RepositoryImpl =
+        RepositoryImpl(database, networkService)
 }
