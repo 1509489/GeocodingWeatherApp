@@ -12,13 +12,19 @@ import kotlinx.android.synthetic.main.fragment_forecast.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.pixelart.geocodingweatherapp.AppController
+import com.pixelart.geocodingweatherapp.common.RxBus
+import com.pixelart.geocodingweatherapp.data.entities.LocationEntity
 import com.pixelart.geocodingweatherapp.di.fragment.FragmentModule
+import io.reactivex.functions.Consumer
 import javax.inject.Inject
 
 @Suppress("CAST_NEVER_SUCCEEDS")
 class ForecastFragment : Fragment() {
 
     @Inject lateinit var viewModel: WeatherViewModel
+
+    private lateinit var latLon: Pair<Double, Double>
+    private var toolbarTitle = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +33,13 @@ class ForecastFragment : Fragment() {
             .applicationComponent
             .newFragmentComponent(FragmentModule(this))
         fragmentComponent.injectForecastScreen(this)
+
+        RxBus.INSTANCE.subscribe(Consumer {
+            if (it is LocationEntity){
+                latLon = Pair(it.latitude, it.longitude)
+                toolbarTitle = it.locationName
+            }
+        })
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -38,12 +51,12 @@ class ForecastFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         (activity as AppCompatActivity).supportActionBar!!.title = ""
         main_collapsing.isTitleEnabled = true
-        main_collapsing.title = "Forecast"
+        main_collapsing.title = toolbarTitle
     }
 
     override fun onResume() {
         super.onResume()
-        viewModel.getForecast(51.5073509, -0.1277583).observe(this, Observer {
+        viewModel.getForecast(latLon.first, latLon.second).observe(this, Observer {
 
         })
     }

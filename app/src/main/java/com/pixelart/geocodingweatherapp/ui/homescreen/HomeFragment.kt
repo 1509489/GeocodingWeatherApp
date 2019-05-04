@@ -13,6 +13,8 @@ import com.pixelart.geocodingweatherapp.AppController
 
 import com.pixelart.geocodingweatherapp.R
 import com.pixelart.geocodingweatherapp.adapter.LocationsAdapter
+import com.pixelart.geocodingweatherapp.common.RxBus
+import com.pixelart.geocodingweatherapp.data.entities.LocationEntity
 import com.pixelart.geocodingweatherapp.di.fragment.FragmentModule
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
@@ -24,6 +26,7 @@ class HomeFragment : Fragment(), LocationsAdapter.OnItemClickedListener {
 
     private lateinit var adapter: LocationsAdapter
     private lateinit var rootView: View
+    private lateinit var locations: ArrayList<LocationEntity>
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +50,7 @@ class HomeFragment : Fragment(), LocationsAdapter.OnItemClickedListener {
         
         viewModel.getLocations().observe(this, Observer {
             adapter.submitList(it)
+            locations = it as ArrayList<LocationEntity>
         })
 
         rootView.rvLocations.apply {
@@ -62,6 +66,8 @@ class HomeFragment : Fragment(), LocationsAdapter.OnItemClickedListener {
     }
 
     override fun onItemClicked(position: Int) {
+        RxBus.INSTANCE.post(locations[position])
+
         val itemView = rootView.rvLocations.findViewHolderForAdapterPosition(position)?.itemView
 
         val action = HomeFragmentDirections.actionHomeToForecast()
