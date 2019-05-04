@@ -15,6 +15,7 @@ import com.pixelart.geocodingweatherapp.R
 import com.pixelart.geocodingweatherapp.adapter.LocationsAdapter
 import com.pixelart.geocodingweatherapp.di.fragment.FragmentModule
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_home.view.*
 import javax.inject.Inject
 
 class HomeFragment : Fragment(), LocationsAdapter.OnItemClickedListener {
@@ -22,6 +23,7 @@ class HomeFragment : Fragment(), LocationsAdapter.OnItemClickedListener {
     @Inject lateinit var viewModel: LocationViewModel
 
     private lateinit var adapter: LocationsAdapter
+    private lateinit var rootView: View
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +38,8 @@ class HomeFragment : Fragment(), LocationsAdapter.OnItemClickedListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        rootView = inflater.inflate(R.layout.fragment_home, container, false)
+        return rootView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -46,7 +49,7 @@ class HomeFragment : Fragment(), LocationsAdapter.OnItemClickedListener {
             adapter.submitList(it)
         })
 
-        rvLocations.apply {
+        rootView.rvLocations.apply {
             layoutManager = LinearLayoutManager(this@HomeFragment.context)
             addItemDecoration(DividerItemDecoration(this@HomeFragment.context, LinearLayoutManager.VERTICAL))
             adapter = this@HomeFragment.adapter
@@ -59,6 +62,11 @@ class HomeFragment : Fragment(), LocationsAdapter.OnItemClickedListener {
     }
 
     override fun onItemClicked(position: Int) {
+        val itemView = rootView.rvLocations.findViewHolderForAdapterPosition(position)?.itemView
+
+        val action = HomeFragmentDirections.actionHomeToForecast()
+        itemView?.let { Navigation.findNavController(it).navigate(action) }
+
         Toast.makeText(activity?.applicationContext, "Position: $position Clicked", Toast.LENGTH_SHORT).show()
     }
 }

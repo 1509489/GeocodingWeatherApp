@@ -16,5 +16,5 @@ data class Main(
     val grndLevel: Double,
     val humidity: Int,
     @SerializedName("temp_kf")
-    val tempKf: Int
+    val tempKf: Double
 )
