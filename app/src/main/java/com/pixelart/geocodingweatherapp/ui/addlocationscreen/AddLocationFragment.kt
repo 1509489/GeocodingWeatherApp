@@ -67,6 +67,7 @@ class AddLocationFragment : Fragment() {
                                 addressComponent.types[0].contains("country", true)
                             }
 
+                            locations.clear()
                             locations.add(
                                 LocationEntity(
                                     locationName = geoResponse.results[0].formattedAddress,
