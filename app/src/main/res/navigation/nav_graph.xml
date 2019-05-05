@@ -10,18 +10,20 @@
         android:name="com.pixelart.geocodingweatherapp.ui.homescreen.HomeFragment"
         android:label="Locations"
         tools:layout="@layout/fragment_home">
-        
+
         <action
-            android:id="@+id/action_home_to_addLocation"
-            app:destination="@id/dest_addLocation"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
-        
+                android:id="@+id/action_home_to_addLocation"
+                app:destination="@id/dest_addLocation"
+                app:enterAnim="@anim/enter_from_right"
+                app:exitAnim="@anim/exit_to_left"
+                app:popEnterAnim="@anim/enter_from_left"
+                app:popExitAnim="@anim/exit_to_right"/>
+
         <action
-            android:id="@+id/action_home_to_forecast"
-            app:destination="@id/dest_forecast" />
+                android:id="@+id/action_home_to_forecast"
+                app:destination="@id/dest_forecast" app:enterAnim="@anim/enter_from_left"
+                app:exitAnim="@anim/exit_to_right" app:popEnterAnim="@anim/enter_from_right"
+                app:popExitAnim="@anim/exit_to_left"/>
     </fragment>
 
     <fragment

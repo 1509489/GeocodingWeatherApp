@@ -9,7 +9,6 @@ import com.pixelart.geocodingweatherapp.AppController
 
 import com.pixelart.geocodingweatherapp.R
 import com.pixelart.geocodingweatherapp.data.entities.LocationEntity
-import com.pixelart.geocodingweatherapp.data.repository.LocationRepositoryImpl
 import com.pixelart.geocodingweatherapp.di.fragment.FragmentModule
 import com.pixelart.geocodingweatherapp.ui.homescreen.LocationViewModel
 import kotlinx.android.synthetic.main.fragment_add_location.view.*
@@ -17,6 +16,7 @@ import javax.inject.Inject
 import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
+import android.widget.Toast
 import com.pixelart.geocodingweatherapp.ui.MainActivity
 
 
@@ -115,20 +115,19 @@ class AddLocationFragment : Fragment() {
 
             if (locations.size > 0){
                 viewModel.addLocation(locations[0])
-            }
 
-
-            viewModel.getStatus().observe(this, Observer {
-                    when(it!!){
-                        LocationRepositoryImpl.Status.SUCCESS ->{
-                            locations.clear()
-                            activity?.supportFragmentManager?.popBackStack()
+                viewModel.getStatus().observe(this, Observer {
+                    when(it.name){
+                        "SUCCESS" ->{
+                            Toast.makeText(activity?.applicationContext, "Location Saved Success", Toast.LENGTH_SHORT).show()
                         }
-                        LocationRepositoryImpl.Status.FAILURE ->{
-
+                        "FAILURE" ->{
+                            Toast.makeText(activity?.applicationContext, "Location Save Fail", Toast.LENGTH_SHORT).show()
                         }
                     }
                 })
+                activity?.supportFragmentManager?.popBackStack()
+            }
 
             true
         }else{
