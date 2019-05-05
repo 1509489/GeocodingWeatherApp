@@ -137,5 +137,4 @@ class ForecastFragment : Fragment() {
         })
         mainActivity.countingIdlingResource.decrement()
     }
-
 }
