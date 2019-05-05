@@ -41,7 +41,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        hideKeyboard()
+        if (etLocation != null)
+            hideKeyboard()
         return NavigationUI.navigateUp(naveController, drawerLayout)
     }
 
