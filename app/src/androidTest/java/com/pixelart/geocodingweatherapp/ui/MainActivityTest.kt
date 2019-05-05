@@ -73,7 +73,7 @@ class MainActivityTest {
         closeKeyboard()
         sleep(2000)
         assertDisplayed(R.id.tvCountry, "United Kingdom")
-        clickBack()
+        clickOn(R.id.mItem_done)
 
         clickListItem(R.id.rvLocations, 0)
         sleep(2000)

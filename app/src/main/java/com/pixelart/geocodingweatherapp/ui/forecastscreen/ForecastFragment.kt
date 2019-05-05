@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 
 import com.pixelart.geocodingweatherapp.R
 import androidx.appcompat.app.AppCompatActivity
@@ -71,6 +72,17 @@ class ForecastFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     override fun onResume() {
         super.onResume()
+
+        viewModel.getStatus().observe(this, Observer {
+            when(it.name){
+                "SUCCESS" ->{
+                    Toast.makeText(activity?.applicationContext, "Forecast Loaded Successfully", Toast.LENGTH_SHORT).show()
+                }
+                "FAILURE" ->{
+                    Toast.makeText(activity?.applicationContext, "Failed to load forecast", Toast.LENGTH_LONG).show()
+                }
+            }
+        })
 
         mainActivity.countingIdlingResource.increment()
         viewModel.getForecast(latLon.first, latLon.second, units)
