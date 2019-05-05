@@ -3,6 +3,8 @@ package com.pixelart.geocodingweatherapp.ui.homescreen
 
 import android.os.Bundle
 import android.view.*
+import android.view.animation.AnimationUtils
+import android.view.animation.LayoutAnimationController
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
@@ -24,6 +26,7 @@ class HomeFragment : Fragment(), LocationsAdapter.OnItemClickedListener {
     @Inject lateinit var viewModel: LocationViewModel
 
     private lateinit var adapter: LocationsAdapter
+    private lateinit var recyclerViewLayoutAnim: LayoutAnimationController
     private lateinit var rootView: View
     private lateinit var locations: ArrayList<LocationEntity>
     
@@ -36,6 +39,7 @@ class HomeFragment : Fragment(), LocationsAdapter.OnItemClickedListener {
         fragmentComponent.injectHomeScreen(this)
 
         adapter = LocationsAdapter(this)
+        recyclerViewLayoutAnim = AnimationUtils.loadLayoutAnimation(activity?.applicationContext, R.anim.layout_anim_fall_down)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -56,6 +60,7 @@ class HomeFragment : Fragment(), LocationsAdapter.OnItemClickedListener {
             layoutManager = LinearLayoutManager(this@HomeFragment.context)
             addItemDecoration(DividerItemDecoration(this@HomeFragment.context, LinearLayoutManager.VERTICAL))
             adapter = this@HomeFragment.adapter
+            layoutAnimation = recyclerViewLayoutAnim
         }
         
         btnAdd.setOnClickListener {
