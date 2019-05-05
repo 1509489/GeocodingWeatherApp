@@ -6,11 +6,13 @@ import androidx.core.view.GravityCompat
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
+import androidx.test.espresso.idling.CountingIdlingResource
 import com.pixelart.geocodingweatherapp.R
 import com.pixelart.geocodingweatherapp.common.PrefsManager
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+    val countingIdlingResource = CountingIdlingResource("network_call")
     private lateinit var naveController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {

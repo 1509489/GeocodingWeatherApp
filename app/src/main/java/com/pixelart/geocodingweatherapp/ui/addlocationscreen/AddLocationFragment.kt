@@ -17,6 +17,7 @@ import javax.inject.Inject
 import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
+import com.pixelart.geocodingweatherapp.ui.MainActivity
 
 
 class AddLocationFragment : Fragment() {
@@ -25,11 +26,12 @@ class AddLocationFragment : Fragment() {
 
     private lateinit var rootView: View
     private lateinit var locations: ArrayList<LocationEntity>
+    private lateinit var mainActivity: MainActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-
+        mainActivity = MainActivity()
         val fragmentComponent = (activity?.application as AppController)
             .applicationComponent
             .newFragmentComponent(FragmentModule(this))
@@ -57,6 +59,7 @@ class AddLocationFragment : Fragment() {
                 if(rootView.etLocation.text.toString().isNotBlank()){
                     val location = rootView.etLocation.text.toString()
 
+                    mainActivity.countingIdlingResource.increment()
                     viewModel.getLocationNetwork(location).observe(this, Observer { geoResponse ->
 
                         if (geoResponse.status.contains("OK", true)){
@@ -75,6 +78,7 @@ class AddLocationFragment : Fragment() {
                             rootView.tvCountry.text = country[0].longName
                         }
                     })
+                    mainActivity.countingIdlingResource.decrement()
                 }else{
                     rootView.tvCountry.text = ""
                 }

@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 
 import com.pixelart.geocodingweatherapp.R
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +17,7 @@ import com.pixelart.geocodingweatherapp.common.*
 import com.pixelart.geocodingweatherapp.data.entities.LocationEntity
 import com.pixelart.geocodingweatherapp.data.model.Forecast
 import com.pixelart.geocodingweatherapp.di.fragment.FragmentModule
+import com.pixelart.geocodingweatherapp.ui.MainActivity
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.fragment_forecast.view.*
 import javax.inject.Inject
@@ -30,9 +32,11 @@ class ForecastFragment : Fragment() {
     private var toolbarTitle = ""
     private lateinit var forecast: ArrayList<Forecast>
     private var units = ""
+    private lateinit var mainActivity: MainActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        mainActivity = MainActivity()
 
         val fragmentComponent = (activity?.application as AppController)
             .applicationComponent
@@ -69,6 +73,18 @@ class ForecastFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
+        viewModel.getStatus().observe(this, Observer {
+            when(it.name){
+                "SUCCESS" ->{
+                    Toast.makeText(activity?.applicationContext, "Forecast Loaded Successfully", Toast.LENGTH_SHORT).show()
+                }
+                "FAILURE" ->{
+                    Toast.makeText(activity?.applicationContext, "Failed to load forecast", Toast.LENGTH_LONG).show()
+                }
+            }
+        })
+
+        mainActivity.countingIdlingResource.increment()
         viewModel.getForecast(latLon.first, latLon.second, units)
             .observe(this, Observer { weatherResponse ->
 
@@ -119,6 +135,7 @@ class ForecastFragment : Fragment() {
             }
 
         })
+        mainActivity.countingIdlingResource.decrement()
     }
 
 }
