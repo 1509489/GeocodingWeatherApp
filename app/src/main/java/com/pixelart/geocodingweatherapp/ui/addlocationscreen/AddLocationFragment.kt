@@ -78,6 +78,7 @@ class AddLocationFragment : Fragment() {
                                     countryLongName = country[0].longName,
                                     countryShortName = country[0].shortName
                             ))
+                            rootView.ivIcon.visibility = View.VISIBLE
                             rootView.tvCountry.text = country[0].longName
                         }
                     })
