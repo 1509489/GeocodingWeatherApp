@@ -1,6 +1,7 @@
 package com.pixelart.geocodingweatherapp.ui.addlocationscreen
 
 
+import android.content.Context
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -16,6 +17,7 @@ import javax.inject.Inject
 import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.pixelart.geocodingweatherapp.ui.MainActivity
 
@@ -128,11 +130,18 @@ class AddLocationFragment : Fragment() {
                     }
                 })
                 activity?.supportFragmentManager?.popBackStack()
-            }
+            }else
+                Toast.makeText(activity?.applicationContext, "Input field must not be empty", Toast.LENGTH_SHORT).show()
 
+            hideKeyboard()
             true
         }else{
             super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun hideKeyboard(){
+        val inputmethodManager:InputMethodManager = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputmethodManager.hideSoftInputFromWindow(rootView.etLocation.windowToken, 0)
     }
 }
