@@ -101,16 +101,16 @@ class ForecastFragment : Fragment() {
                 tvDayFour.text = Utils.INSTANCE.timestampToDayShort(forecast[3].timestamp.toLong())
 
                 if (units.contains("metric")){
-                    tvDayOneTemperature.text = "${forecast[0].temperature}°C"
-                    tvDayTwoTemperature.text = "${forecast[1].temperature}°C"
-                    tvDayThreeTemperature.text = "${forecast[2].temperature}°C"
-                    tvDayFourTemperature.text = "${forecast[3].temperature}°C"
+                    tvDayOneTemperature.text = "${Math.round(forecast[0].temperature)}°C"
+                    tvDayTwoTemperature.text = "${Math.round(forecast[1].temperature)}°C"
+                    tvDayThreeTemperature.text = "${Math.round(forecast[2].temperature)}°C"
+                    tvDayFourTemperature.text = "${Math.round(forecast[3].temperature)}°C"
                 }
                 else if(units.contains("imperial")){
-                    tvDayOneTemperature.text = "${forecast[0].temperature}°F"
-                    tvDayTwoTemperature.text = "${forecast[1].temperature}°F"
-                    tvDayThreeTemperature.text = "${forecast[2].temperature}°F"
-                    tvDayFourTemperature.text = "${forecast[3].temperature}°F"
+                    tvDayOneTemperature.text = "${Math.round(forecast[0].temperature)}°F"
+                    tvDayTwoTemperature.text = "${Math.round(forecast[1].temperature)}°F"
+                    tvDayThreeTemperature.text = "${Math.round(forecast[2].temperature)}°F"
+                    tvDayFourTemperature.text = "${Math.round(forecast[3].temperature)}°F"
                 }
 
                 GlideApp.with(this)
