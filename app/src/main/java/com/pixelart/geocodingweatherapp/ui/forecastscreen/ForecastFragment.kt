@@ -85,9 +85,9 @@ class ForecastFragment : Fragment() {
         })
 
         mainActivity.countingIdlingResource.increment()
-        viewModel.getForecast(latLon.first, latLon.second, units)
-            .observe(this, Observer { weatherResponse ->
+        viewModel.getForecast(latLon.first, latLon.second, units).observe(this, Observer { weatherResponse ->
 
+            forecast.clear()
             for (i in 0 until weatherResponse.list.size step 8 )
             {
                 forecast.add(Forecast(weatherResponse.list[i].dt, weatherResponse.list[i].weather[0].icon,
